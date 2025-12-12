@@ -1,24 +1,52 @@
-# The NUAST Fullstack app
+# Flask routes documentation:
 
-## Modules:
-Each module is stored in its own directory
+## `GET /read/{id}`
+- returns: 
+```json
+{
+    "username": 'string', 
+    "email": 'string'
+}
+```
 
-### Database:
-- Mongo DB
-- ORM
-### Flask `./flask`:
-- CRUD Restful API
-- Serve the frontend
-- Interact with the DB
-    - `/read`
-    - `/update`
-    - `/list`
-    - `/delete`
-### Frontend:
-- Jinja
-- Bootstrap
+## `GET /list`
+- returns an object with every user:
+```json
+{
+    "0": {
+        "username": "string",
+        "email": "string"
+    },
+    "1": {
+        "username": "john doe",
+        "email": "john-doe@example.com"
+    }, 
+    .....
+}
+```
 
-## Plan
-For now we only need to take a `Name` and `Email` from a user in the frontend code,  
-Store it in a database through the Flask API  
-Which then interacts with the database to store it
+## `POST /update/{id}`
+`body`:
+```json
+{
+    "uid": int,             // required
+    "username": "string",   // optional
+    "email": "string"       // optional
+}
+```
+
+Updates the username and/or email address associated with a user id
+- returns: 
+    - success: `200 OK`
+    - failure: `400 Bad Request`
+
+## `DELETE /delete/{id}`
+`body`:
+```json
+{
+    "id": int
+}
+```
+- returns: 
+    - success: `200 OK`
+    - failure: `404 Resource not found`
